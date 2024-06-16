@@ -1,10 +1,15 @@
 import express from 'express'
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import userRoutes from './routes/user.route.js';
+import cors from 'cors';
 
 
 const app = express();
 dotenv.config();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 
 const PORT = process.env.PORT || 3000;
@@ -17,5 +22,7 @@ mongoose.connect(process.env.MONGODB_URI).then(() => {
 }).catch((error) => {
     console.log(error)
 })
+
+app.use('/api/v1/user', userRoutes)
 
 export default app;
